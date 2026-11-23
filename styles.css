@@ -72,24 +72,19 @@ textarea {
   text-decoration: none;
 }
 
-.brand-mark {
-  display: grid;
-  width: 38px;
-  aspect-ratio: 1;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--burgundy);
+.site-header .brand-logo {
+  display: block !important;
+  width: 38px !important;
+  max-width: 38px !important;
+  height: 38px !important;
+  max-height: 38px !important;
+  flex: 0 0 38px !important;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
 }
 
-.brand-mark svg {
-  width: 21px;
-  fill: none;
-  stroke: var(--white);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.5;
-}
 
 .brand-copy {
   display: flex;
@@ -1032,8 +1027,28 @@ textarea:focus-visible {
     min-height: 70px;
   }
 
+  .site-header .brand-logo {
+    width: 38px !important;
+    max-width: 38px !important;
+    height: 38px !important;
+    max-height: 38px !important;
+    flex-basis: 38px !important;
+  }
+
+  .header-inner {
+    gap: 12px;
+  }
+
+  .brand {
+    gap: 7px;
+  }
+
   .brand-name {
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  .brand-tagline {
+    font-size: 7px;
   }
 
   .menu-toggle {
