@@ -17,7 +17,17 @@ if (menuToggle && primaryNavigation) {
   });
 
   primaryNavigation.addEventListener("click", (event) => {
-    if (event.target.closest("a")) closeNavigation();
+    if (event.target instanceof Element && event.target.closest("a")) closeNavigation();
+  });
+
+  document.addEventListener("click", (event) => {
+    if (
+      event.target instanceof Node
+      && !menuToggle.contains(event.target)
+      && !primaryNavigation.contains(event.target)
+    ) {
+      closeNavigation();
+    }
   });
 
   document.addEventListener("keydown", (event) => {
