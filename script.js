@@ -118,10 +118,33 @@ async function loadGalleryAssets() {
 
 void loadGalleryAssets();
 
-if (joinForm) {
-  joinForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const status = joinForm.querySelector("[data-form-status]");
-    if (status) status.textContent = "Formulár je pripravený na overenie a pripojenie k odosielaciemu systému.";
-  });
+if (joinForm instanceof HTMLFormElement) {
+  const returnUrlField = joinForm.querySelector('input[name="_next"]');
+  const formConfirmation = document.querySelector("[data-form-confirmation]");
+  const currentUrl = new URL(window.location.href);
+
+  if (formConfirmation instanceof HTMLDialogElement) {
+    const closeButton = formConfirmation.querySelector("[data-form-confirmation-close]");
+    closeButton?.addEventListener("click", () => formConfirmation.close());
+    formConfirmation.addEventListener("click", (event) => {
+      if (event.target === formConfirmation) formConfirmation.close();
+    });
+
+    if (currentUrl.searchParams.get("formStatus") === "sent") {
+      currentUrl.searchParams.delete("formStatus");
+      window.history.replaceState(null, "", currentUrl.href);
+      formConfirmation.showModal();
+    }
+  }
+
+  if (
+    returnUrlField instanceof HTMLInputElement
+    && (window.location.protocol === "http:" || window.location.protocol === "https:")
+  ) {
+    const returnUrl = new URL(currentUrl.href);
+    returnUrl.search = "";
+    returnUrl.searchParams.set("formStatus", "sent");
+    returnUrl.hash = "";
+    returnUrlField.value = returnUrl.href;
+  }
 }

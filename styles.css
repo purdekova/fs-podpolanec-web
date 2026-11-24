@@ -1005,6 +1005,59 @@ textarea:focus-visible {
   font-size: 9px;
 }
 
+.form-status {
+  margin: 0;
+  color: var(--burgundy);
+  font-size: 12px;
+}
+
+.form-status:empty {
+  display: none;
+}
+
+.form-status[data-state="pending"] {
+  color: var(--muted);
+}
+
+.form-actions button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.form-confirmation {
+  width: min(92vw, 460px);
+  max-width: none;
+  padding: 32px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  background: var(--burgundy);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  color: var(--white);
+  text-align: center;
+}
+
+.form-confirmation::backdrop {
+  background: rgba(15, 13, 12, 0.78);
+}
+
+.form-confirmation p {
+  margin: 0 0 24px;
+  color: inherit;
+  font-size: 16px;
+}
+
+.form-confirmation-close {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--burgundy);
+  cursor: pointer;
+}
+
+.form-confirmation-close:hover {
+  background: var(--cream);
+  transform: translateY(-1px);
+}
+
 .site-footer {
   background: var(--white);
   border-top: 1px dashed rgba(214, 184, 94, 0.32);
