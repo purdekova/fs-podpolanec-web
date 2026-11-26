@@ -119,39 +119,28 @@ async function loadGalleryAssets() {
 void loadGalleryAssets();
 
 if (joinForm instanceof HTMLFormElement) {
-  const submitButton = joinForm.querySelector('button[type="submit"]');
+  const returnUrlField = joinForm.querySelector('input[name="_next"]');
   const formStatus = joinForm.parentElement?.querySelector("[data-form-status]");
+  const currentUrl = new URL(window.location.href);
 
-  if (submitButton instanceof HTMLButtonElement && formStatus instanceof HTMLParagraphElement) {
-    joinForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      if (submitButton.disabled) return;
+  if (
+    currentUrl.searchParams.get("formStatus") === "sent"
+    && formStatus instanceof HTMLParagraphElement
+  ) {
+    currentUrl.searchParams.delete("formStatus");
+    window.history.replaceState(null, "", currentUrl.href);
+    formStatus.dataset.state = "success";
+    formStatus.textContent = "Ďakujeme, formulár bol úspešne odoslaný! Čoskoro sa vám ozveme. ❤️";
+  }
 
-      submitButton.disabled = true;
-      formStatus.dataset.state = "pending";
-      formStatus.textContent = "Prihláška sa odosiela…";
-
-      try {
-        const response = await fetch(joinForm.action, {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          body: new FormData(joinForm)
-        });
-        const result = await response.json();
-
-        if (!response.ok || (result.success !== "true" && result.success !== true)) {
-          throw new Error("Odoslanie prihlášky zlyhalo.");
-        }
-
-        joinForm.reset();
-        formStatus.dataset.state = "success";
-        formStatus.textContent = "Ďakujeme, formulár bol úspešne odoslaný! Čoskoro sa vám ozveme. ❤️";
-      } catch {
-        formStatus.dataset.state = "error";
-        formStatus.textContent = "Prihlášku sa nepodarilo odoslať. Skontrolujte internetové pripojenie a skúste to znova.";
-      } finally {
-        submitButton.disabled = false;
-      }
-    });
+  if (
+    returnUrlField instanceof HTMLInputElement
+    && (window.location.protocol === "http:" || window.location.protocol === "https:")
+  ) {
+    const returnUrl = new URL(currentUrl.href);
+    returnUrl.search = "";
+    returnUrl.searchParams.set("formStatus", "sent");
+    returnUrl.hash = "";
+    returnUrlField.value = returnUrl.href;
   }
 }
