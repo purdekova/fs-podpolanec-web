@@ -905,13 +905,27 @@ textarea:focus-visible {
   align-items: start;
 }
 
+.join-copy .page-title {
+  font-size: 62px;
+}
+
+.join-copy .page-intro {
+  margin-top: 24px;
+}
+
+.join-subtitle {
+  margin: 32px 0 8px;
+  color: var(--burgundy);
+  font-size: 26px;
+}
+
 .join-form-column {
   display: grid;
   gap: 16px;
 }
 
 .join-benefits {
-  margin: 28px 0 0;
+  margin: 18px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -930,6 +944,16 @@ textarea:focus-visible {
   color: var(--burgundy);
   content: "✓";
   font-weight: 700;
+}
+
+.join-motivational {
+  margin: 24px 0 22px;
+  border-top: 1px solid rgba(214, 184, 94, 0.38);
+  padding-top: 14px;
+  color: var(--burgundy);
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.5;
 }
 
 .form-card {
@@ -1397,6 +1421,10 @@ textarea:focus-visible {
 
   .join-page-grid {
     gap: 36px;
+  }
+
+  .join-copy .page-title {
+    font-size: clamp(38px, 11vw, 48px);
   }
 
   .form-card {
