@@ -119,32 +119,39 @@ async function loadGalleryAssets() {
 void loadGalleryAssets();
 
 if (joinForm instanceof HTMLFormElement) {
-  const returnUrlField = joinForm.querySelector('input[name="_next"]');
-  const formConfirmation = document.querySelector("[data-form-confirmation]");
-  const currentUrl = new URL(window.location.href);
+  const submitButton = joinForm.querySelector('button[type="submit"]');
+  const formStatus = joinForm.parentElement?.querySelector("[data-form-status]");
 
-  if (formConfirmation instanceof HTMLDialogElement) {
-    const closeButton = formConfirmation.querySelector("[data-form-confirmation-close]");
-    closeButton?.addEventListener("click", () => formConfirmation.close());
-    formConfirmation.addEventListener("click", (event) => {
-      if (event.target === formConfirmation) formConfirmation.close();
+  if (submitButton instanceof HTMLButtonElement && formStatus instanceof HTMLParagraphElement) {
+    joinForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (submitButton.disabled) return;
+
+      submitButton.disabled = true;
+      formStatus.dataset.state = "pending";
+      formStatus.textContent = "Prihláška sa odosiela…";
+
+      try {
+        const response = await fetch(joinForm.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(joinForm)
+        });
+        const result = await response.json();
+
+        if (!response.ok || (result.success !== "true" && result.success !== true)) {
+          throw new Error("Odoslanie prihlášky zlyhalo.");
+        }
+
+        joinForm.reset();
+        formStatus.dataset.state = "success";
+        formStatus.textContent = "Ďakujeme, formulár bol úspešne odoslaný! Čoskoro sa vám ozveme. ❤️";
+      } catch {
+        formStatus.dataset.state = "error";
+        formStatus.textContent = "Prihlášku sa nepodarilo odoslať. Skontrolujte internetové pripojenie a skúste to znova.";
+      } finally {
+        submitButton.disabled = false;
+      }
     });
-
-    if (currentUrl.searchParams.get("formStatus") === "sent") {
-      currentUrl.searchParams.delete("formStatus");
-      window.history.replaceState(null, "", currentUrl.href);
-      formConfirmation.showModal();
-    }
-  }
-
-  if (
-    returnUrlField instanceof HTMLInputElement
-    && (window.location.protocol === "http:" || window.location.protocol === "https:")
-  ) {
-    const returnUrl = new URL(currentUrl.href);
-    returnUrl.search = "";
-    returnUrl.searchParams.set("formStatus", "sent");
-    returnUrl.hash = "";
-    returnUrlField.value = returnUrl.href;
   }
 }

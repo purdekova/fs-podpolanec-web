@@ -18,25 +18,23 @@
           <ul class="join-benefits"><li>pravidelné skúšky a dochádzka</li><li>spoločná forma a vystúpenia</li><li>živý spájajúci kolektív Podpoľania</li></ul>
           <a class="button button-primary" href="index.html#ensembles-title">Spoznaj naše zložky</a>
         </div>
-        <form class="form-card" data-join-form action="https://formsubmit.co/a2b978760e203489ac52ec44169eab49" method="POST">
-          <p class="card-kicker">Prvý krok</p><h2>Prihláška do súboru</h2><p>Vyplňte formulár a pošlite nám základné údaje.</p>
-          <input type="hidden" name="_subject" value="Prihláška do Folklórneho súboru Podpoľanec">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="">
-          <div class="form-grid">
-            <div class="field"><label for="name">Meno a priezvisko *</label><input id="name" name="name" type="text" required></div>
-            <div class="field"><label for="email">E-mail *</label><input id="email" name="email" type="email" required></div>
-            <div class="field"><label for="phone">Telefónne číslo</label><input id="phone" name="phone" type="tel"></div>
-            <div class="field"><label for="interest">O ktorú zložku máš záujem? *</label><select id="interest" name="interest" required><option value="">Vyber zložku</option><option>Tanečná zložka</option><option>Spevácka zložka</option><option>Hudobná zložka</option><option>Inštrumentálna zložka</option></select></div>
-            <div class="field field-full"><label for="message">Napíš nám niečo o sebe</label><textarea id="message" name="message" placeholder="Čo ťa k nám privádza?"></textarea></div>
-            <div class="form-actions"><small>* Povinné údaje</small><button class="button button-primary" type="submit">Odoslať prihlášku</button></div>
-            <p class="field-full form-status" data-form-status role="status" aria-live="polite"></p>
-          </div>
-        </form>
-        <dialog class="form-confirmation" data-form-confirmation aria-labelledby="form-confirmation-message">
-          <p id="form-confirmation-message">Ďakujeme, formulár bol úspešne odoslaný. Čoskoro sa vám ozveme. :)</p>
-          <button class="button form-confirmation-close" type="button" data-form-confirmation-close>Zavrieť</button>
-        </dialog>
+        <div class="join-form-column">
+          <form class="form-card" data-join-form action="https://formsubmit.co/ajax/a2b978760e203489ac52ec44169eab49" method="POST">
+            <p class="card-kicker">Prvý krok</p><h2>Prihláška do súboru</h2><p>Vyplňte formulár a pošlite nám základné údaje.</p>
+            <input type="hidden" name="_subject" value="Prihláška do Folklórneho súboru Podpoľanec">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="">
+            <div class="form-grid">
+              <div class="field"><label for="name">Meno a priezvisko *</label><input id="name" name="name" type="text" required></div>
+              <div class="field"><label for="email">E-mail *</label><input id="email" name="email" type="email" required></div>
+              <div class="field"><label for="phone">Telefónne číslo</label><input id="phone" name="phone" type="tel"></div>
+              <div class="field"><label for="interest">O ktorú zložku máš záujem? *</label><select id="interest" name="interest" required><option value="">Vyber zložku</option><option>Tanečná zložka</option><option>Spevácka zložka</option><option>Hudobná zložka</option><option>Inštrumentálna zložka</option></select></div>
+              <div class="field field-full"><label for="message">Napíš nám niečo o sebe</label><textarea id="message" name="message" placeholder="Čo ťa k nám privádza?"></textarea></div>
+              <div class="form-actions"><small>* Povinné údaje</small><button class="button button-primary" type="submit">Odoslať prihlášku</button></div>
+            </div>
+          </form>
+          <p class="form-status" data-form-status role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
       </div></section>
     </main>
     <footer class="site-footer">
