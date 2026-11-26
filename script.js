@@ -119,28 +119,57 @@ async function loadGalleryAssets() {
 void loadGalleryAssets();
 
 if (joinForm instanceof HTMLFormElement) {
-  const returnUrlField = joinForm.querySelector('input[name="_next"]');
+  const submitButton = joinForm.querySelector('button[type="submit"]');
   const formStatus = joinForm.parentElement?.querySelector("[data-form-status]");
-  const currentUrl = new URL(window.location.href);
 
-  if (
-    currentUrl.searchParams.get("formStatus") === "sent"
-    && formStatus instanceof HTMLParagraphElement
-  ) {
-    currentUrl.searchParams.delete("formStatus");
-    window.history.replaceState(null, "", currentUrl.href);
-    formStatus.dataset.state = "success";
-    formStatus.textContent = "Ďakujeme, formulár bol úspešne odoslaný! Čoskoro sa vám ozveme. ❤️";
-  }
+  if (submitButton instanceof HTMLButtonElement && formStatus instanceof HTMLParagraphElement) {
+    joinForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (submitButton.disabled) return;
 
-  if (
-    returnUrlField instanceof HTMLInputElement
-    && (window.location.protocol === "http:" || window.location.protocol === "https:")
-  ) {
-    const returnUrl = new URL(currentUrl.href);
-    returnUrl.search = "";
-    returnUrl.searchParams.set("formStatus", "sent");
-    returnUrl.hash = "";
-    returnUrlField.value = returnUrl.href;
+      submitButton.disabled = true;
+      formStatus.dataset.state = "pending";
+      formStatus.textContent = "Prihláška sa odosiela…";
+
+      try {
+        const response = await fetch(joinForm.action, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify(Object.fromEntries(new FormData(joinForm)))
+        });
+
+        let result;
+        try {
+          result = await response.json();
+        } catch {
+          throw new Error("Server vrátil neplatnú odpoveď. Skúste to znova.");
+        }
+
+        if (!response.ok || result.success !== true) {
+          throw new Error(
+            typeof result.message === "string"
+              ? result.message
+              : "Server prihlášku neprijal. Skúste to znova."
+          );
+        }
+
+        joinForm.reset();
+        formStatus.dataset.state = "success";
+        formStatus.textContent = "Ďakujeme, formulár bol úspešne odoslaný! Čoskoro sa vám ozveme. ❤️";
+      } catch (error) {
+        formStatus.dataset.state = "error";
+        const detail = error instanceof TypeError
+          ? "Skontrolujte internetové pripojenie a skúste to znova."
+          : error instanceof Error
+            ? error.message
+            : "Skontrolujte internetové pripojenie a skúste to znova.";
+        formStatus.textContent = `Prihlášku sa nepodarilo odoslať. ${detail}`;
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
   }
 }
