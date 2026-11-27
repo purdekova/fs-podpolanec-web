@@ -100,7 +100,7 @@ textarea {
 }
 
 .brand-tagline {
-  color: #b89a43;
+  color: #6b5520;
   font-size: 8px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -183,16 +183,8 @@ textarea {
   background: var(--burgundy);
 }
 
-.brand:focus-visible,
-.menu-toggle:focus-visible,
-.nav-link:focus-visible,
-.footer-social-link:focus-visible,
-.button:focus-visible,
-.card-link:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--gold);
+:focus-visible {
+  outline: 3px solid var(--burgundy);
   outline-offset: 3px;
 }
 
@@ -820,12 +812,6 @@ textarea:focus-visible {
   cursor: pointer;
 }
 
-.gallery-open:focus-visible,
-.gallery-lightbox-close:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
-
 .performance-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -1010,7 +996,6 @@ textarea:focus-visible {
   background: var(--white);
   color: var(--text);
   padding: 12px 13px;
-  outline: none;
 }
 
 .field textarea {

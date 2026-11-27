@@ -73,6 +73,31 @@ if (galleryLightbox instanceof HTMLDialogElement) {
 async function loadGalleryAssets() {
   if (!galleryGrid) return;
 
+  const galleryDescriptions = [
+    "Tanečníci folklórneho súboru v krojoch počas spoločného vystúpenia na javisku",
+    "Tanečník v čiernom klobúku oddychuje v kroji pred vystúpením",
+    "Portrét tanečníka v klobúku a vyšívanej košeli",
+    "Štyri tanečnice v bielych blúzkach a čiernych sukniach",
+    "Tanečníci súboru vystupujú na vonkajšom javisku",
+    "Folklórny súbor tancuje na javisku pred divákmi",
+    "Tanečníci v krojoch predvádzajú ľudový tanec v pároch",
+    "Skupina tanečníc v čiernych sukniach vystupuje na javisku",
+    "Speváčka v kroji spieva do mikrofónu na javisku",
+    "Skupina tanečníc v krojoch vystupuje na osvetlenom javisku",
+    "Tanečnice v čiernych sukniach a bielych blúzkach tancujú v rade",
+    "Dve tanečnice v krojoch vystupujú na javisku",
+    "Tanečný pár v krojoch počas vystúpenia",
+    "Tanečník v klobúku vystupuje pred ďalšími členmi súboru",
+    "Folklórny súbor predvádza skupinový tanec na javisku",
+    "Tanečnice v bielych a červených krojoch počas skupinového tanca",
+    "Tanečný pár v krojoch tancuje na vonkajšom javisku",
+    "Tanečný pár v krojoch s pastierskou palicou počas ľudového tanca",
+    "Tanečnice v krojoch stoja v rade na javisku",
+    "Tanečníci v krojoch predvádzajú spoločný tanec v kruhu",
+    "Tanečný pár v krojoch tancuje v popredí javiska",
+    "Pohľad zozadu na tanečníkov v krojoch vystupujúcich na javisku"
+  ];
+
   try {
     const response = await fetch("assets/");
     if (!response.ok) return;
@@ -97,13 +122,14 @@ async function loadGalleryAssets() {
       const figure = document.createElement("figure");
       const button = document.createElement("button");
       const image = document.createElement("img");
+      const description = galleryDescriptions[number - 1];
 
       figure.className = "gallery-card";
       button.className = "gallery-open";
       button.type = "button";
-      button.setAttribute("aria-label", `Zväčšiť fotografiu ${number}`);
+      button.setAttribute("aria-label", `Zväčšiť fotografiu: ${description}`);
       image.src = url.href;
-      image.alt = `Fotografia folklórneho súboru ${number}`;
+      image.alt = description;
 
       button.append(image);
       figure.append(button);
