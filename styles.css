@@ -224,11 +224,20 @@ textarea {
 .page-kicker,
 .eyebrow {
   margin: 0 0 18px;
-  color: #a98e43;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+}
+
+.hero-kicker,
+.section-kicker {
+  color: #6b5520;
+}
+
+.page-kicker,
+.eyebrow {
+  color: #a98e43;
 }
 
 .hero-kicker {
